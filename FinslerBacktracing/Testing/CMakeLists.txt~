@@ -1,0 +1,56 @@
+
+    add_executable(${CLP}_Compare ${CLP}Test.cxx)
+    target_link_libraries(${CLP}Test
+        vtkIO
+    )
+    
+    set(TEST_DATA_DIR ${PROJECT_SOURCE_DIR}/Testing/TestData)
+    if (Slicer_SOURCE_DIR)
+        # This is a Slicer build
+        if(Slicer_BINARY_DIR)
+            # And this is for Slicer4. It requires calling the CLI with the full path
+            set(OUTPUT_DIR ${Slicer_BINARY_DIR}/Testing)
+            set(Slicer_EXE ${Slicer_BINARY_DIR}/Slicer)
+            SET(RUNEXECB
+                ${Slicer_EXE}
+                --launch
+                "${Slicer_BINARY_DIR}/lib/Slicer-${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}/cli-modules/${CLP}"
+            )
+            SET(COMPEXECB
+                ${Slicer_EXE}
+                --launch
+                "${Slicer_BINARY_DIR}/bin/${CLP}Test"
+            )
+        endif(Slicer_BINARY_DIR)
+        
+    else( Slicer_SOURCE_DIR )
+        set(OUTPUT_DIR ${CMAKE_BINARY_DIR}/Testing)
+        SET( RUNEXECB ${CMAKE_BINARY_DIR}/${CLP} )
+        SET( COMPEXECB ${CMAKE_BINARY_DIR}/${CLP}Test )
+    endif (Slicer_SOURCE_DIR)
+    
+    add_test(${PROJECT_NAME}_SampleTest
+        ${RUNEXECB}
+        --minimumlength 10
+        --maximumlength 800
+        --stoppingCurvature 0.8
+        --stepLength 0.5
+        --label 1
+        ${OUTPUT_DIR}/sampleDirections.nrrd
+        ${TEST_DATA_DIR}/sampleFinslerCosts.nii.gz
+        ${TEST_DATA_DIR}/sampleSeeds.nii.gz
+        ${OUTPUT_DIR}/sampleFibers.vtp
+    )
+    
+    add_test(${PROJECT_NAME}_SampleCompare
+        ${COMPEXECB}
+        ${TEST_DATA_DIR}/sampleFibers.vtp
+        ${OUTPUT_DIR}/sampleFibers.vtp
+    )
+    
+    add_test(${PROJECT_NAME}_CleanResults
+        rm
+        ${OUTPUT_DIR}/sampleDirections.nrrd
+        ${OUTPUT_DIR}/sampleFibers.vtp
+    )
+  
