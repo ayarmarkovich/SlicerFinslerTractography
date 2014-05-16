@@ -1,56 +1,44 @@
+#-----------------------------------------------------------------------------
+set(CLP ${MODULE_NAME})
 
-    add_executable(${CLP}Test ${CLP}Test.cxx)
-    target_link_libraries(${CLP}Test
-        vtkIO
+#-----------------------------------------------------------------------------
+add_executable(${CLP}Test ${CLP}Test.cxx)
+target_link_libraries(${CLP}Test
+    vtkIO
     )
+
+set_target_properties(${CLP}Test PROPERTIES LABELS ${CLP})
     
-    set(TEST_DATA_DIR ${PROJECT_SOURCE_DIR}/Testing/TestData)
-    if (Slicer_SOURCE_DIR)
-        # This is a Slicer build
-        if(Slicer_BINARY_DIR)
-            # And this is for Slicer4. It requires calling the CLI with the full path
-            set(OUTPUT_DIR ${Slicer_BINARY_DIR}/Testing)
-            set(Slicer_EXE ${Slicer_BINARY_DIR}/Slicer)
-            SET(RUNEXECB
-                ${Slicer_EXE}
-                --launch
-                "${Slicer_BINARY_DIR}/lib/Slicer-${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}/cli-modules/${CLP}"
-            )
-            SET(COMPEXECB
-                ${Slicer_EXE}
-                --launch
-                "${Slicer_BINARY_DIR}/bin/${CLP}Test"
-            )
-        endif(Slicer_BINARY_DIR)
-        
-    else( Slicer_SOURCE_DIR )
-        set(OUTPUT_DIR ${CMAKE_BINARY_DIR}/Testing)
-        SET( RUNEXECB ${CMAKE_BINARY_DIR}/${CLP} )
-        SET( COMPEXECB ${CMAKE_BINARY_DIR}/${CLP}Test )
-    endif (Slicer_SOURCE_DIR)
-    
-    add_test(${PROJECT_NAME}_SampleTest
-        ${RUNEXECB}
+set(TEST_DATA_DIR ${PROJECT_SOURCE_DIR}/Testing/TestData)
+
+set(testname ${CLP}_SampleTest)
+add_test(NAME ${testname} COMMAND ${SEM_LAUNCH_COMMAND} $<TARGET_FILE:${CLP}Test>
         --minimumlength 10
         --maximumlength 800
         --stoppingCurvature 0.8
         --stepLength 0.5
         --label 1
-        ${OUTPUT_DIR}/sampleDirections.nrrd
+        ${TEMP}/sampleDirections.nrrd
         ${TEST_DATA_DIR}/sampleFinslerCosts.nii.gz
         ${TEST_DATA_DIR}/sampleSeeds.nii.gz
-        ${OUTPUT_DIR}/sampleFibers.vtp
+        ${TEMP}/sampleFibers.vtp
     )
-    
-    add_test(${PROJECT_NAME}_SampleCompare
-        ${COMPEXECB}
-        ${TEST_DATA_DIR}/sampleFibers.vtp
-        ${OUTPUT_DIR}/sampleFibers.vtp
+set_property(TEST ${testname} PROPERTY LABELS ${CLP})
+
+# This runs a program that checks the output and compares to the one expected:
+set(testname ${CLP}_SampleCompare)
+add_test(NAME ${testname} COMMAND ${SEM_LAUNCH_COMMAND} $<TARGET_FILE:${CLP}Test>
+    ModuleEntryPoint
+    ${TEST_DATA_DIR}/sampleFibers.vtp
+    ${TEMP}/sampleFibers.vtp
     )
-    
-    add_test(${PROJECT_NAME}_CleanResults
-        rm
-        ${OUTPUT_DIR}/sampleDirections.nrrd
-        ${OUTPUT_DIR}/sampleFibers.vtp
+set_property(TEST ${testname} PROPERTY LABELS ${CLP})
+
+set(testname ${CLP}_CleanResults)
+add_test(NAME ${testname} COMMAND ${SEM_LAUNCH_COMMAND} $<TARGET_FILE:${CLP}Test>
+    ModuleEntryPoint
+    rm
+    ${TEMP}/sampleDirections.nrrd
+    ${TEMP}/sampleFibers.vtp
     )
-  
+set_property(TEST ${testname} PROPERTY LABELS ${CLP})
