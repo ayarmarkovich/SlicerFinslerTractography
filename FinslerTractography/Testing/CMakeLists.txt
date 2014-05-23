@@ -2,9 +2,13 @@
 set(CLP ${MODULE_NAME})
 
 #-----------------------------------------------------------------------------
-add_executable(${CLP}Test ${CLP}Test.cxx)
-add_dependencies(${CLP}Test ${CLP})
-target_link_libraries(${CLP}Test ${CLP}Lib)
+add_executable(${CLP}Test ${CLP}Test.cxx 
+     ${PROJECT_SOURCE_DIR}/FinslerTractography/HARDI-ITK/sphericalHarmonics.cxx
+     ${PROJECT_SOURCE_DIR}/FinslerTractography/HARDI-ITK/sh2hot.cxx
+)
+add_dependencies(${CLP}Test ${CLP} ${CLP}Lib)
+
+target_link_libraries(${CLP}Test ${ITK_LIBRARIES})
 set_target_properties(${CLP}Test PROPERTIES LABELS ${CLP})
 
 add_executable(${CLP}_Compare ${CLP}_Compare.cxx)
