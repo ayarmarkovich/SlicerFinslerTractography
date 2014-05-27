@@ -1,3 +1,4 @@
+
 #-----------------------------------------------------------------------------
 set(CLP ${MODULE_NAME})
 
@@ -19,7 +20,7 @@ set(TEST_DATA_DIR ${PROJECT_SOURCE_DIR}/Testing/TestData)
 
 set(testname ${CLP}_SampleTest)
 add_test(NAME ${testname} COMMAND ${SEM_LAUNCH_COMMAND} $<TARGET_FILE:${CLP}Test>
-  ${testname}
+  ${CLP}Test
     --mi 50
     --cf -10
     --la 0.006
@@ -42,7 +43,7 @@ set_property(TEST ${testname} PROPERTY LABELS ${CLP})
 
 set(testname ${CLP}_SampleTest2)
 add_test(NAME ${testname} COMMAND ${SEM_LAUNCH_COMMAND} $<TARGET_FILE:${CLP}Test>
-  ${testname}
+  ${CLP}Test
     --mi 50
     --cf -10
     --la 0.006
@@ -60,7 +61,6 @@ set_property(TEST ${testname} PROPERTY LABELS ${CLP})
 # This runs a program that checks the output and compares to the one expected
 set(testname ${CLP}_SampleCompare2)
 add_test(NAME ${testname} COMMAND ${SEM_LAUNCH_COMMAND} $<TARGET_FILE:${CLP}_Compare>
-    ModuleEntryPoint
     ${TEMP}/finsler_distance_map2.nii.gz 
     ${TEST_DATA_DIR}/finsler_distance_map.nii.gz
   )
@@ -69,7 +69,7 @@ set_property(TEST ${testname} PROPERTY LABELS ${CLP})
 
 set(testname ${CLP}_SampleTest3)
 add_test(NAME ${testname} COMMAND ${SEM_LAUNCH_COMMAND} $<TARGET_FILE:${CLP}Test>
-  ${testname}
+  ${CLP}Test
     --mi 50
     --cf -10
     --la 0.006
