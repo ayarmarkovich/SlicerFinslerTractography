@@ -13,7 +13,7 @@ target_link_libraries(${CLP}_Compare ${ITK_LIBRARIES}
     )
 set_target_properties(${CLP}_Compare PROPERTIES LABELS ${CLP})
     
-set(TEST_DATA_DIR ${PROJECT_SOURCE_DIR}/Testing/TestData)
+set(TEST_DATA_DIR ${PROJECT_SOURCE_DIR}/FinslerBacktracing/Testing/TestData)
 
 set(testname ${CLP}_SampleTest)
 add_test(NAME ${testname} COMMAND ${SEM_LAUNCH_COMMAND} $<TARGET_FILE:${CLP}Test>
