@@ -14,6 +14,7 @@ target_link_libraries(${CLP}_Compare ${ITK_LIBRARIES}
 set_target_properties(${CLP}_Compare PROPERTIES LABELS ${CLP})
     
 set(TEST_DATA_DIR ${PROJECT_SOURCE_DIR}/FinslerBacktracing/Testing/TestData)
+set(TEMP "${CMAKE_BINARY_DIR}/Testing/Temporary")
 
 set(testname ${CLP}_SampleTest)
 add_test(NAME ${testname} COMMAND ${SEM_LAUNCH_COMMAND} $<TARGET_FILE:${CLP}Test>
@@ -23,7 +24,7 @@ add_test(NAME ${testname} COMMAND ${SEM_LAUNCH_COMMAND} $<TARGET_FILE:${CLP}Test
         --stoppingCurvature 0.8
         --stepLength 0.5
         --label 1
-        ${TEMP}/sampleDirections.nrrd
+        ${TEST_DATA_DIR}/sampleDirections.nrrd
         ${TEST_DATA_DIR}/sampleFinslerCosts.nii.gz
         ${TEST_DATA_DIR}/sampleSeeds.nii.gz
         ${TEMP}/sampleFibers.vtp
