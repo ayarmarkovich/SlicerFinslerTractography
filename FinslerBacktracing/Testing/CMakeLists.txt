@@ -7,12 +7,17 @@ add_dependencies(${CLP}Test ${CLP})
 target_link_libraries(${CLP}Test ${CLP}Lib)
 set_target_properties(${CLP}Test PROPERTIES LABELS ${CLP})
 
+#-----------------------------------------------------------------------------
+include_directories(${SlicerExecutionModel_EXTRA_INCLUDE_DIRECTORIES})
+
 add_executable(${CLP}_Compare ${CLP}_Compare.cxx)
-target_link_libraries(${CLP}_Compare ${ITK_LIBRARIES}
-    vtkIO
-    )
+target_link_libraries(${CLP}_Compare
+  ${ITK_LIBRARIES}
+  ${SlicerExecutionModel_EXTRA_EXECUTABLE_TARGET_LIBRARIES}
+  )
 set_target_properties(${CLP}_Compare PROPERTIES LABELS ${CLP})
-    
+
+#-----------------------------------------------------------------------------
 set(TEST_DATA_DIR ${PROJECT_SOURCE_DIR}/FinslerBacktracing/Testing/TestData)
 set(TEMP "${CMAKE_BINARY_DIR}/Testing/Temporary")
 

@@ -5,6 +5,8 @@
 #include "itkImageFileReader.h"
 #include "itkImageRegionConstIterator.h"
 
+#include <itkFactoryRegistration.h>
+
 int RegressionTestImage (const char *, const char *, int, bool);
 
 int main(int argc, char **argv)
@@ -15,6 +17,8 @@ int main(int argc, char **argv)
       return -1;
    }
    
+   itk::itkFactoryRegistration();
+
    typedef float PixelType;
    const unsigned int DIMENSION = 3;
    typedef itk::Image<PixelType,DIMENSION>          ImageType;

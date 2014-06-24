@@ -3,6 +3,14 @@
 set(MODULE_NAME FinslerTractography)
 
 #-----------------------------------------------------------------------------
+
+#
+# SlicerExecutionModel
+#
+find_package(SlicerExecutionModel REQUIRED)
+include(${SlicerExecutionModel_USE_FILE})
+
+#-----------------------------------------------------------------------------
 SEMMacroBuildCLI(
   NAME ${MODULE_NAME}
   LOGO_HEADER ${CMAKE_CURRENT_SOURCE_DIR}/Resources/NAMICLogo.h
