@@ -7,9 +7,13 @@ add_dependencies(${CLP}Test ${CLP})
 target_link_libraries(${CLP}Test ${CLP}Lib)
 set_target_properties(${CLP}Test PROPERTIES LABELS ${CLP})
 
+#-----------------------------------------------------------------------------
+include_directories(${SlicerExecutionModel_EXTRA_INCLUDE_DIRECTORIES})
+
 add_executable(${CLP}_Compare ${CLP}_Compare.cxx)
 target_link_libraries(${CLP}_Compare
   ${ITK_LIBRARIES}
+  ${SlicerExecutionModel_EXTRA_EXECUTABLE_TARGET_LIBRARIES}
   )
 set_target_properties(${CLP}_Compare PROPERTIES LABELS ${CLP})
 
