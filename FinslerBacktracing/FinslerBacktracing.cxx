@@ -39,8 +39,11 @@
 #include "itkVTKRungeKuttaFinslerIntegration.h"
 //--------------------------------------------------
 // VTK include to write poly-data:
-#include "vtkXMLPolyDataWriter.h"
-#include "vtkPolyDataWriter.h"
+#include <vtkNew.h>
+#include <vtkPolyDataWriter.h>
+#include <vtkTrivialProducer.h>
+#include <vtkVersionMacros.h>
+#include <vtkXMLPolyDataWriter.h>
 //--------------------------------------------------
 
 #define DIMENSION 3
@@ -142,9 +145,25 @@ namespace{
         vtkSmartPointer<vtkPolyDataWriter>    writerVtk = vtkSmartPointer<vtkPolyDataWriter>::New();
         if( outputFibers.compare("0") != 0 ){
             writerVtp->SetFileName( outputFibers.c_str() );
+#if VTK_MAJOR_VERSION <= 5
             writerVtp->SetInput( integrator->GetStreamlines() );
+#else
+            {
+              vtkNew<vtkTrivialProducer> trivalProducer;
+              trivalProducer->SetOutput( integrator->GetStreamlines() );
+              writerVtp->SetInputConnection( trivalProducer->GetOutputPort() );
+            }
+#endif
             writerVtk->SetFileName( outputFibers.c_str() );
+#if VTK_MAJOR_VERSION <= 5
             writerVtk->SetInput( integrator->GetStreamlines() );
+#else
+            {
+              vtkNew<vtkTrivialProducer> trivalProducer;
+              trivalProducer->SetOutput( integrator->GetStreamlines() );
+              writerVtk->SetInputConnection( trivalProducer->GetOutputPort() );
+            }
+#endif
             try{
                 if( outputFibers.rfind(".vtp")==outputFibers.size()-4 ){
                     if( writerVtp->Write() != 1 ){
