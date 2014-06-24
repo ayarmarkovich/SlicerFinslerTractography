@@ -42,7 +42,7 @@
 #include <vtkNew.h>
 #include <vtkPolyDataWriter.h>
 #include <vtkTrivialProducer.h>
-#include <vtkVersionMacros.h>
+#include <vtkVersion.h>
 #include <vtkXMLPolyDataWriter.h>
 //--------------------------------------------------
 
