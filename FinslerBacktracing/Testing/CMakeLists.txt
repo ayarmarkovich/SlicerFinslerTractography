@@ -27,15 +27,15 @@ add_test(NAME ${testname} COMMAND ${SEM_LAUNCH_COMMAND} $<TARGET_FILE:${CLP}Test
         ${TEST_DATA_DIR}/sampleDirections.nrrd
         ${TEST_DATA_DIR}/sampleFinslerCosts.nii.gz
         ${TEST_DATA_DIR}/sampleSeeds.nii.gz
-        ${TEMP}/sampleFibers.vtp
+        ${TEMP}/sampleFibers.vtk
     )
 set_property(TEST ${testname} PROPERTY LABELS ${CLP})
 
 # This runs a program that checks the output and compares to the one expected:
 set(testname ${CLP}_SampleCompare)
 add_test(NAME ${testname} COMMAND ${SEM_LAUNCH_COMMAND} $<TARGET_FILE:${CLP}_Compare>
-    ${TEST_DATA_DIR}/sampleFibers.vtp
-    ${TEMP}/sampleFibers.vtp
+    ${TEST_DATA_DIR}/sampleFibers.vtk
+    ${TEMP}/sampleFibers.vtk
     )
 set_property(TEST ${testname} PROPERTY LABELS ${CLP})
 
@@ -43,6 +43,6 @@ set_property(TEST ${testname} PROPERTY LABELS ${CLP})
 #add_test(${MODULE_NAME}_CleanResults
 #        rm
 #        ${TEMP}/sampleDirections.nrrd
-#        ${TEMP}/sampleFibers.vtp
+#        ${TEMP}/sampleFibers.vtk
 #    )
 #set_property(TEST ${testname} PROPERTY LABELS ${CLP})
