@@ -12,7 +12,7 @@ include_directories(${SlicerExecutionModel_EXTRA_INCLUDE_DIRECTORIES})
 
 add_executable(${CLP}_Compare ${CLP}_Compare.cxx)
 target_link_libraries(${CLP}_Compare
-  ${ITK_LIBRARIES}
+  ${VTK_LIBRARIES}
   ${SlicerExecutionModel_EXTRA_EXECUTABLE_TARGET_LIBRARIES}
   )
 set_target_properties(${CLP}_Compare PROPERTIES LABELS ${CLP})
@@ -32,15 +32,15 @@ add_test(NAME ${testname} COMMAND ${SEM_LAUNCH_COMMAND} $<TARGET_FILE:${CLP}Test
         ${TEST_DATA_DIR}/sampleDirections.nrrd
         ${TEST_DATA_DIR}/sampleFinslerCosts.nii.gz
         ${TEST_DATA_DIR}/sampleSeeds.nii.gz
-        ${TEMP}/sampleFibers.vtk
+        ${TEMP}/sampleFibers.vtp
     )
 set_property(TEST ${testname} PROPERTY LABELS ${CLP})
 
 # This runs a program that checks the output and compares to the one expected:
 set(testname ${CLP}_SampleCompare)
 add_test(NAME ${testname} COMMAND ${SEM_LAUNCH_COMMAND} $<TARGET_FILE:${CLP}_Compare>
-    ${TEST_DATA_DIR}/sampleFibers.vtk
-    ${TEMP}/sampleFibers.vtk
+    ${TEST_DATA_DIR}/sampleFibers.vtp
+    ${TEMP}/sampleFibers.vtp
     )
 set_property(TEST ${testname} PROPERTY LABELS ${CLP})
 
@@ -48,6 +48,6 @@ set_property(TEST ${testname} PROPERTY LABELS ${CLP})
 #add_test(${MODULE_NAME}_CleanResults
 #        rm
 #        ${TEMP}/sampleDirections.nrrd
-#        ${TEMP}/sampleFibers.vtk
+#        ${TEMP}/sampleFibers.vtp
 #    )
 #set_property(TEST ${testname} PROPERTY LABELS ${CLP})
