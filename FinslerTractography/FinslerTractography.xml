@@ -2,15 +2,27 @@
 <executable>
   <category>Diffusion.Diffusion Weighted Images</category>
   <title>Finsler Tractography based on HARDI</title>
-  <description>
-This module uses the fast-sweeping algorithm to find the connectivity from a set of seeding points to each voxel in the input DWI volume (or inside the mask, if provided).\n This connectivity is the minimum cost of arriving at each voxel from the seeds, following the trajectory of the estimated pathways. The cost is computed as the integral along the pathway of a local directional cost computed from the ODF or some other HARDI-related measurement. A complete description of the algorithm may be found in:\n J. Melonakos, E. Pichon, S. Angenent, A. Tannenbaum, "Finsler Active Contours". IEEE Transactions on Pattern Analysis and Machine Intelligence, 30(3):412-423. March 2008.\n A background-removal mask can be used to accelerate computations. Optionally, the algorithm provides at each voxel an estimation of the vector tangent to the optimal pathway at that point (arrival direction).\n Fast-sweeping is full multi-threaded, and some other accelerations (checking only those voxels in the causal direction of the solution) have been implemented to obtain a result in a reasonable time. However, an algorithm virtually identical to that in the aforementioned paper may be reproduced fixing the advanced parameters as follows:\n   Cost: (E(q)/Phi(r))^3\n   Directions: 26\n   Use threads: deactivate\n   Use accelerated iterations: deactivate (Start accelerated iterations becomes irrelevant).
+  <description><![CDATA[This module uses the fast-sweeping algorithm to find the connectivity from a set of seeding points to each voxel in the input DWI volume (or inside the mask, if provided).<br><br>
+This connectivity is the minimum cost of arriving at each voxel from the seeds, following the trajectory of the estimated pathways. The cost is computed as the integral along the pathway of a local directional cost computed from the ODF or some other HARDI-related measurement. A complete description of the algorithm may be found in:<br>
+J. Melonakos, E. Pichon, S. Angenent, A. Tannenbaum, "Finsler Active Contours". IEEE Transactions on Pattern Analysis and Machine Intelligence, 30(3):412-423. March 2008. <br><br>
+A background-removal mask can be used to accelerate computations. Optionally, the algorithm provides at each voxel an estimation of the vector tangent to the optimal pathway at that point (arrival direction).\n Fast-sweeping is full multi-threaded, and some other accelerations (checking only those voxels in the causal direction of the solution) have been implemented to obtain a result in a reasonable time. However, an algorithm virtually identical to that in the aforementioned paper may be reproduced fixing the advanced parameters as follows:<br>
+ Cost: (E(q)/Phi(r))^3<br>
+ Directions: 26<br>   
+ Use threads: deactivate<br>
+ Use accelerated iterations: deactivate (Start accelerated iterations becomes irrelevant).<br><br>
+See additional papers:<br>
+O'Donnell L, Haker S, Westin CF. New approaches to estimation of white matter connectivity in diffusion tensor MRI: Elliptic pdes and geodesics in a tensor-warped space. In Fifth International Conference on Medical Image Computing and Computer-Assisted Intervention (MICCAI'02). Tokyo, Japan, 2002;459-466.<br>
+<a href="http://lmi.bwh.harvard.edu/papers/papers/odonnellMICCAI02.html">http://lmi.bwh.harvard.edu/papers/papers/odonnellMICCAI02.html</a>
+<br><br>
+Pichon E, Westin CF, Tannenbaum A. A Hamilton-Jacobi-Bellman approach to high angular resolution diffusion tractography. In Eighth International Conference on Medical Image Computing and Computer-Assisted Intervention (MICCAI'05), Lecture Notes in Computer Science 3749. Palm Springs, CA, USA, 2005;180-187.<br>
+<a href="http://lmi.bwh.harvard.edu/papers/papers/pichonMICCAI05.html">http://lmi.bwh.harvard.edu/papers/papers/pichonMICCAI05.html</a>]]>
   </description>
   <version>0.0.1.$Revision: 1 $(alpha)</version>
   <documentation-url>http://www.slicer.org/slicerWiki/index.php/Modules:FinslerTractography-Documentation-3.6</documentation-url>
   <license></license>
-  <contributor>Antonio Tristan Vega, Demian Wassermann, Carl-Fredrik Westin. The directional iterators were contributed by Luis Ibanez (Kitware).
+  <contributor>Antonio Tristan Vega, Alex Yarmarkovich, Demian Wassermann, Peter Savadjiev, Carl-Fredrik Westin. The directional iterators were contributed by Luis Ibanez (Kitware).
   </contributor>
-  <acknowledgements>Supported by grant number FMECD-2010/71131616E from the Spanish Ministry of Education/Fulbright Committee
+  <acknowledgements>Supported by NIH grants R01 MH092862 (PIs Westin and Verma), R01 MH074794 (PI Westin) and P41 EB015902 (PI Kikinis), as well as by grant number FMECD-2010/71131616E from the Spanish Ministry of Education/Fulbright Committee.
   </acknowledgements>
   
   
